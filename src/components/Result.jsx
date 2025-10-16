@@ -1,4 +1,12 @@
-export function Result(){
+import { calculateInvestmentResults,formatter } from "../util/investment"
+export function Result({valueInvest}){
+    const annualData = calculateInvestmentResults({
+        initialInvestment:valueInvest.initial,
+        annualInvestment:valueInvest.annual,
+        expectedReturn:valueInvest.expected,
+        duration:valueInvest.duration,
+    })
+    console.log(annualData)
     return (
         <table id="result">
             <thead>
@@ -11,13 +19,17 @@ export function Result(){
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th>1</th>
-                    <th>$16,800</th>
-                    <th>$900</th>
-                    <th>$900</th>
-                    <th>$15,900</th>
-                </tr>
+                {annualData.map(({year,interest,valueEndOfYear,annualInvestment,interstedCapital,total_interst})=>{
+                    return (
+                        <tr key={year}>
+                            <th>{year}</th>
+                            <th>{formatter.format(valueEndOfYear)}</th>
+                            <th>{formatter.format(interest)}</th>
+                            <th>{formatter.format(total_interst)}</th>
+                            <th>{formatter.format(interstedCapital)}</th>
+                        </tr>
+                    )
+                })}
             </tbody>
         </table>
     )
