@@ -10,21 +10,19 @@ function App() {
     expected : 5.5,
     duration :12
   });
-  function handleChangeInvestment({initial,annual,expected,duration}){
+  function handleChangeInvestment(field,newvalue){
     updateInvestment((current)=>{
-      const newState = {...current};
-      newState.initial = initial;
-      newState.annual = annual;
-      newState.expected = expected;
-      newState.duration = duration;
-      return newState;
+      return {
+        ...current,
+        [field]:newvalue
+      }
     })
   }
   return (
     <>
       <Header/>
-      <Input valueInvest = {invesment} onChangeInvestment = {({initial,annual,expected,duration})=>{
-        handleChangeInvestment({initial,annual,expected,duration})
+      <Input valueInvest = {invesment} onChangeInvestment = {(field,value)=>{
+        handleChangeInvestment(field,value)
       }}/>
       <Result valueInvest = {invesment}/>
     </>
